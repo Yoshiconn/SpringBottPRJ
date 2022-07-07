@@ -26,6 +26,7 @@
             <button onclick="location.href='getNoticelist'">뒤로</button>
         </div>
         <div style="float: right;">
+            <button onclick="location.href='NoticeUpdate?no=<%=rDTO.getNotice_seq()%>'">수정</button>
             <button onclick="location.href='NoticeDelete?no=<%=rDTO.getNotice_seq()%>'">삭제</button>
         </div>
     </div>

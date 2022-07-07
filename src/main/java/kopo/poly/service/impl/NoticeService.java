@@ -52,4 +52,10 @@ public class NoticeService implements INoticeService {
         log.info(this.getClass().getName() + "noticeDelete Service End !!");
         return res;
     }
+
+    @Override
+    public int noticeUpdate(NoticeDTO nDTO) throws Exception {
+        int res = noticeMapper.noticeUpdate(nDTO);
+        return res;
+    }
 }

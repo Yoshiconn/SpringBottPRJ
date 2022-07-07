@@ -28,4 +28,9 @@
         delete from notice
         where notice_seq = #{notice_seq}
     </delete>
+    <update id="noticeUpdate" parameterType="NoticeDTO">
+        UPDATE notice set
+            title = #{title}, contents = #{contents}
+        WHERE  NOTICE_SEQ = #{notice_seq}
+    </update>
 </mapper>    

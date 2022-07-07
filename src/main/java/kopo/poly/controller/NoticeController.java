@@ -1,5 +1,6 @@
 package kopo.poly.controller;
 
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import kopo.poly.dto.NoticeDTO;
 import kopo.poly.service.INoticeService;
 import kopo.poly.service.impl.NoticeService;
@@ -7,12 +8,14 @@ import kopo.poly.util.CmmUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.rmi.server.ExportException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -153,5 +156,44 @@ public class NoticeController {
         model.addAttribute("url", url);
 
         return "Redirect"; /* 리다이렉트로 쓰면 유동적으로 페이지로 보낼수 있음 위의 예제로 보면 성공하면 getNoticeList로 실패하면 NoticeDelect로*/
+    }
+    @GetMapping (value = "NoticeUpdate")
+    public String NoticeUpdate(HttpServletRequest request, ModelMap model) throws Exception {
+        String Notice_seq = request.getParameter("no");
+        log.info(Notice_seq);
+
+        model.addAttribute("Notice_seq", Notice_seq);
+
+        return "editform";
+    }
+    @GetMapping (value = "DoNoticeUpdate")
+    public String DoNoticeUpdate (HttpServletRequest request, Model model) throws Exception {
+        String title = request.getParameter("title");
+        String contents = request.getParameter("contents");
+        String notice_seq = request.getParameter("notice_seq");
+        log.info("받아온 번호: " + notice_seq);
+        log.info("받아온 제목 : " + title);
+        log.info("받아온 내용 : " + contents);
+
+        NoticeDTO nDTO = new NoticeDTO();
+        nDTO.setNotice_seq(notice_seq);
+        nDTO.setTitle(title);
+        nDTO.setContents(contents);
+
+        int res = noticeService.noticeUpdate(nDTO);
+
+        String msg;
+        String url;
+        if(res > 0) {
+            msg = "수정 성공!!";
+            url = "getNoticeList";
+        } else {
+            msg = "수정 실패..";
+            url = "getNoticeList";
+        }
+        model.addAttribute("msg", msg);
+        model.addAttribute("url", url);
+
+        return "Redirect";
     }
 }

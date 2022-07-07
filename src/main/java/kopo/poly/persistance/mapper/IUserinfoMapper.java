@@ -1,0 +1,13 @@
+package kopo.poly.persistance.mapper;
+
+import kopo.poly.dto.NoticeDTO;
+import kopo.poly.dto.UserinfoDTO;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
+
+@Mapper
+public interface IUserinfoMapper {
+
+    int IUserinfoMapper(UserinfoDTO pDTO) throws Exception;
+}
